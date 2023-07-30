@@ -1,0 +1,28 @@
+services:
+
+  hotels:
+    image: gaspar/hotels
+    mem_limit: 800m
+    ports:
+      - "9090:9090"
+    networks:
+      - gaspar-network
+
+  reservation:
+    image: gaspar/reservation
+    mem_limit: 800m
+    ports:
+      - "9092:9092"
+    networks:
+      - gaspar-network
+
+  room:
+    image: gaspar/room
+    mem_limit: 800m
+    ports:
+      - "9091:9091"
+    networks:
+      - gaspar-network
+
+networks:
+  gaspar-network:
