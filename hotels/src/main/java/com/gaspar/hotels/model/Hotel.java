@@ -8,7 +8,7 @@ import lombok.Data;
 public class Hotel {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "hotel_id")
     private long hotelId;
 
