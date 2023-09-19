@@ -5,24 +5,71 @@ services:
     mem_limit: 800m
     ports:
       - "9090:9090"
+    depends_on:
+      - configserver
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
     networks:
       - gaspar-network
+    environment:
+      SPRING_PROFILES_ACTIVE: default
+      SPRING_CONFIG_IMPORT: configserver:http://configserver:9095
+      SPRING_DATASOURCE_URL: jdbc:postgresql://docker-postgresql:5432/udemy_alfredo_leal
 
-  reservation:
-    image: gaspar/reservation
+
+  # reservation:
+  #   image: gaspar/reservations
+  #   mem_limit: 800m
+  #   ports:
+  #     - "9092:9092"
+  #   networks:
+  #     - gaspar-network
+  #   depends_on:
+  #     - configserver
+  #   deploy:
+  #     restart_policy:
+  #       condition: on-failure
+  #       delay: 5s
+  #       max_attempts: 3
+  #       window: 120s
+  #   environment:
+  #     SPRING_PROFILES_ACTIVE: default
+  #     SPRING_CONFIG_IMPORT: configserver:http://configserver:9095
+  #     SPRING_DATASOURCE_URL: jdbc:postgresql://postgresql::5432/udemy_alfredo_leal
+
+  # room:
+  #   image: gaspar/room
+  #   mem_limit: 800m
+  #   ports:
+  #     - "9091:9091"
+  #   networks:
+  #     - gaspar-network
+  #   depends_on:
+  #     - configserver
+  #   deploy:
+  #     restart_policy:
+  #       condition: on-failure
+  #       delay: 5s
+  #       max_attempts: 3
+  #       window: 120s
+  #   environment:
+  #     SPRING_PROFILES_ACTIVE: default
+  #     SPRING_CONFIG_IMPORT: configserver:http://configserver:9095
+  #     SPRING_DATASOURCE_URL: jdbc:postgresql://postgresql::5432/udemy_alfredo_leal
+
+  configserver:
+    image: gaspar/configserver
     mem_limit: 800m
     ports:
-      - "9092:9092"
+      - "9095:9095"
     networks:
-      - gaspar-network
-
-  room:
-    image: gaspar/room
-    mem_limit: 800m
-    ports:
-      - "9091:9091"
-    networks:
-      - gaspar-network
+      gaspar-network:
+        aliases:
+          - patito_host
 
 networks:
   gaspar-network:

@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.gaspar</groupId>
-	<artifactId>config-server</artifactId>
+	<artifactId>configserver</artifactId>
 	<version>0.0.1</version>
 	<name>config-server</name>
 	<description>microservicio con config server para configuraciones</description>
