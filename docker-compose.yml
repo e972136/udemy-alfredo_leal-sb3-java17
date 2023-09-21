@@ -1,5 +1,21 @@
 services:
 
+  postgresqltest:
+    image: postgres:14.5-alpine3.16
+    container_name: docker-postgresql
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: "123"
+      POSTGRES_USER: "gaspar"
+#      POSTGRES_DB: "udemy_alfredo_leal"
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - ./schemas:/var/lib/postgresql/data
+    networks:
+      - gaspar-network
+
   hotels:
     image: gaspar/hotels
     mem_limit: 800m
@@ -18,7 +34,7 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: default
       SPRING_CONFIG_IMPORT: configserver:http://configserver:9095
-      SPRING_DATASOURCE_URL: jdbc:postgresql://docker-postgresql:5432/udemy_alfredo_leal
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgresqltest:5432/udemy_alfredo_leal
 
 
   # reservation:
