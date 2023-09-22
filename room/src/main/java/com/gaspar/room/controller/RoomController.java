@@ -8,6 +8,7 @@ import com.gaspar.room.model.PropertiesRoom;
 import com.gaspar.room.services.IRoomService;
 import com.gaspar.room.model.Room;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -22,9 +23,16 @@ public class RoomController {
         this.roomConfiguration = roomConfiguration;
     }
 
-    @GetMapping("rooms")
+    @GetMapping("/rooms")
     public List<Room> search(){
         return service.search();
+    }
+
+    @GetMapping("/rooms/byHotel/{hotelId}")
+    public List<Room> searchByHotel(
+            @PathVariable long hotelId
+    ){
+        return service.searchByHotel(hotelId);
     }
 
     @GetMapping("/rooms/read/properties")

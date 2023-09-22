@@ -1,5 +1,12 @@
-#### find all
+#### HOTELS
 GET http://localhost:9090/hotels
+
+
+
+
+### CUARTOS POR HOTEL
+GET http://localhost:9090/hotels/rooms/2
+
 
 
 
@@ -8,13 +15,17 @@ GET http://localhost:9090/hotels/read/properties
 
 
 
-#### find by id
+#### RESERVATIONS
 GET http://localhost:9092/reservations
 
 
-#### find by id
+#### ROOMS
 GET http://localhost:9091/rooms
 
+
+
+#### ROOMS FILTRADO
+GET http://localhost:9091/rooms/byHotel/1
 
 
 

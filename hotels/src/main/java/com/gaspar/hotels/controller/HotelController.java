@@ -6,10 +6,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.gaspar.hotels.model.Hotel;
 import com.gaspar.hotels.model.PropertiesHotels;
+import com.gaspar.hotels.model.responses.HotelRooms;
 import com.gaspar.hotels.services.IHotelService;
 import com.gaspar.hotels.config.HotelsConfiguration;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -24,9 +26,16 @@ public class HotelController {
         this.configuration = configuration;
     }
 
-    @GetMapping("hotels")
+    @GetMapping("/hotels")
     public List<Hotel> serch(){
         return  service.search();
+    }
+
+    @GetMapping("/hotels/rooms/{hotelId}")
+    public HotelRooms roomsByHotel(
+            @PathVariable long hotelId
+    ){
+        return service.roomsByHotel(hotelId);
     }
 
     @GetMapping("/hotels/read/properties")

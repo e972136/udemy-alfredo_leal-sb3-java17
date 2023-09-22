@@ -5,4 +5,6 @@ import java.util.List;
 
 public interface IRoomService {
     List<Room> search();
+
+    List<Room> searchByHotel(long hotelId);
 }
