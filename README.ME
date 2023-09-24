@@ -27,3 +27,14 @@ inicio de proyecto
 ## para generar imagen usando dockerfile `docker build . -t gaspar/<proyecto>`  
 
 ## En hotelService se utiliza RestTemplate
+
+## en Rooms service se usara openFeing
+* agregar dependencia en rooms 
+``<!--		para usar feing-->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-openfeign</artifactId>
+		</dependency>
+
+* Agregar en clase principal @EnableFeignClients
+* Crear llamado en objeto ReservationFeignClient

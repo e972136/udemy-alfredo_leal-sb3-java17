@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.gaspar.hotels.model.Hotel;
 import com.gaspar.hotels.model.PropertiesHotels;
+import com.gaspar.hotels.model.responses.HotelReservations;
 import com.gaspar.hotels.model.responses.HotelRooms;
 import com.gaspar.hotels.services.IHotelService;
 import com.gaspar.hotels.config.HotelsConfiguration;
@@ -36,6 +37,13 @@ public class HotelController {
             @PathVariable long hotelId
     ){
         return service.roomsByHotel(hotelId);
+    }
+
+    @GetMapping("/hotels/reservations/{hotelId}")
+    public HotelReservations findReservations(
+            @PathVariable long hotelId
+    ){
+        return service.findReservationsByHotel(hotelId);
     }
 
     @GetMapping("/hotels/read/properties")

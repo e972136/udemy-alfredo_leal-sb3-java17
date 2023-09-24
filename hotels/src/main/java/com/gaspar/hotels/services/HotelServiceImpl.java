@@ -2,15 +2,11 @@ package com.gaspar.hotels.services;
 
 import com.gaspar.hotels.dao.HotelRepository;
 import com.gaspar.hotels.model.Hotel;
-import com.gaspar.hotels.model.responses.HotelRooms;
-import com.gaspar.hotels.model.responses.Room;
+import com.gaspar.hotels.model.responses.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static java.util.Objects.isNull;
 
@@ -48,5 +44,29 @@ public class HotelServiceImpl implements IHotelService{
 
 
         return HotelRooms.of(hotel,rooms);
+    }
+
+    @Override
+    public HotelReservations findReservationsByHotel(long hotelId) {
+        HotelRooms hotelRooms = roomsByHotel(hotelId);
+        if(isNull(hotelRooms)){
+            return null;
+        }
+
+        List<Reservations> reservations = new ArrayList<>();
+        for(Room room:hotelRooms.rooms()){
+            Map<String, Long> pathVariable = new HashMap<>();
+            pathVariable.put("idRoom",room.roomId());
+            List<Reservation> reservationsObtaind = Arrays.asList(Objects.requireNonNull(clientRest.getForObject(
+                    "http://localhost:9092/reservations/byroom/{idRoom}"
+                    , Reservation[].class
+                    , pathVariable
+            )));
+//            reservationId, String roomName, Date startDt, Date finishDt
+            reservationsObtaind.forEach(
+                    i->reservations.add(new Reservations(i.reservationId(), room.roomName(), i.startDt(),i.finishDt()))
+                    );
+        }
+        return HotelReservations.of(hotelRooms.hotelName(),reservations);
     }
 }

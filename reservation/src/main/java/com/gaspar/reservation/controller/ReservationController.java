@@ -7,6 +7,7 @@ import com.gaspar.reservation.model.PropertiesReservation;
 import com.gaspar.reservation.model.Reservation;
 import com.gaspar.reservation.services.IReservationService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
@@ -19,9 +20,17 @@ public class ReservationController {
         this.reservationConfig = reservationConfig;
     }
 
-    @GetMapping("reservations")
+    @GetMapping("/reservations")
     public List<Reservation> search(){
         return service.search();
+    }
+
+
+    @GetMapping("/reservations/byroom/{idRoom}")
+    public List<Reservation> searchByRoom(
+        @PathVariable long idRoom
+    ){
+        return service.searchByRoom(idRoom);
     }
 
     @GetMapping("/reservations/read/properties")

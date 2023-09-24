@@ -10,6 +10,7 @@ import com.gaspar.room.model.Room;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+import com.gaspar.room.model.RoomsReservations;
 
 import java.util.List;
 
@@ -33,6 +34,13 @@ public class RoomController {
             @PathVariable long hotelId
     ){
         return service.searchByHotel(hotelId);
+    }
+
+    @GetMapping("/rooms/reservations/{roomId}")
+    public RoomsReservations searchReservations(
+            @PathVariable long roomId
+    ){
+        return service.searchReservationsByRoom(roomId);
     }
 
     @GetMapping("/rooms/read/properties")

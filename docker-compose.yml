@@ -1,18 +1,20 @@
+version: '3.7'
+
 services:
 
   postgresqltest:
     image: postgres:14.5-alpine3.16
-    container_name: docker-postgresql
+    container_name: udemy-postgresql
     restart: always
     ports:
-      - 5432:5432
+      - "5432:5432"
     environment:
       POSTGRES_PASSWORD: "123"
       POSTGRES_USER: "gaspar"
 #      POSTGRES_DB: "udemy_alfredo_leal"
       PGDATA: /var/lib/postgresql/data/pgdata
     volumes:
-      - ./schemas:/var/lib/postgresql/data
+      - /home/gc/Desktop/docker/postgresql/schemas:/var/lib/postgresql/data
     networks:
       - gaspar-network
 
@@ -23,6 +25,7 @@ services:
       - "9090:9090"
     depends_on:
       - configserver
+      - postgresqltest
     deploy:
       restart_policy:
         condition: on-failure

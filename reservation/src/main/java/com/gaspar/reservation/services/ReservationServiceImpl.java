@@ -1,6 +1,6 @@
 package com.gaspar.reservation.services;
 
-import com.gaspar.reservation.dao.IReservationDao;
+import com.gaspar.reservation.dao.ReservationRepository;
 import com.gaspar.reservation.model.Reservation;
 import org.springframework.stereotype.Service;
 
@@ -8,14 +8,19 @@ import java.util.List;
 
 @Service
 public class ReservationServiceImpl implements IReservationService{
-    private final IReservationDao reservationDao;
+    private final ReservationRepository reservationRepository;
 
-    public ReservationServiceImpl(IReservationDao reservationDao) {
-        this.reservationDao = reservationDao;
+    public ReservationServiceImpl(ReservationRepository reservationDao) {
+        this.reservationRepository = reservationDao;
     }
 
     @Override
     public List<Reservation> search() {
-        return reservationDao.findAll();
+        return reservationRepository.findAll();
+    }
+
+    @Override
+    public List<Reservation> searchByRoom(long idRoom) {
+        return reservationRepository.findByRoomId(idRoom);
     }
 }

@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface IReservationService {
     List<Reservation> search();
+
+    List<Reservation> searchByRoom(long idRoom);
 }
