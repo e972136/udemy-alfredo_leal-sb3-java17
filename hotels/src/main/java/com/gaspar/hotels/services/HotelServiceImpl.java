@@ -3,6 +3,7 @@ package com.gaspar.hotels.services;
 import com.gaspar.hotels.dao.HotelRepository;
 import com.gaspar.hotels.model.Hotel;
 import com.gaspar.hotels.model.responses.*;
+import com.gaspar.hotels.services.feignclient.RoomFeignClient;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -17,9 +18,12 @@ public class HotelServiceImpl implements IHotelService{
 
     private final HotelRepository hotelRepository;
 
-    public HotelServiceImpl(RestTemplate clientRest, HotelRepository hotelDao) {
+    private final RoomFeignClient feignClient;
+
+    public HotelServiceImpl(RestTemplate clientRest, HotelRepository hotelDao, RoomFeignClient feignClient) {
         this.clientRest = clientRest;
         this.hotelRepository = hotelDao;
+        this.feignClient = feignClient;
     }
 
     @Override
@@ -37,11 +41,12 @@ public class HotelServiceImpl implements IHotelService{
         Map<String, Long> pathVariable = new HashMap<>();
         pathVariable.put("hotelId",hotelId);
 
-        List<Room> rooms = Arrays.asList(clientRest.getForObject(
-                "http://localhost:9091/rooms/byHotel/{hotelId}"
-                ,Room[].class
-                ,pathVariable));
-
+////        RestTemplate
+//        List<Room> rooms = Arrays.asList(clientRest.getForObject(
+//                "http://localhost:9091/rooms/byHotel/{hotelId}"
+//                ,Room[].class
+//                ,pathVariable));
+        List<Room> rooms = feignClient.searchByHotel(hotelId);
 
         return HotelRooms.of(hotel,rooms);
     }

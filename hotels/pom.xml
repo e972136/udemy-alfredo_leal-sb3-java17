@@ -60,6 +60,11 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!--		para usar feing-->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-openfeign</artifactId>
+		</dependency>
 <!--		Para poder utilizar eurkaSErver como cliente-->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
