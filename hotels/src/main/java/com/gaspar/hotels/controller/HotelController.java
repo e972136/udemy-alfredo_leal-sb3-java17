@@ -11,6 +11,7 @@ import com.gaspar.hotels.model.responses.HotelRooms;
 import com.gaspar.hotels.services.IHotelService;
 import com.gaspar.hotels.config.HotelsConfiguration;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,6 +33,7 @@ public class HotelController {
         return  service.search();
     }
 
+    @CircuitBreaker(name="roomsByHotelCB")
     @GetMapping("/hotels/rooms/{hotelId}")
     public HotelRooms roomsByHotel(
             @PathVariable long hotelId

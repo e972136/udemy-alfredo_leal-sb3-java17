@@ -51,6 +51,7 @@
 			<optional>true</optional>
 		</dependency>
 		<!--		springdoc.org -->
+<!--		/swagger-ui/index.html#/-->
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
